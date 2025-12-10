@@ -3,10 +3,10 @@
 **Creación de agentes inteligentes y flujos de trabajo que impulsan los ingresos y reducen los costes operativos.**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Conectar-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/gabriel-elias-flores-440413342/)
-[![Correo electrónico](https://img.shields.io/badge/Email-Contactame-red?style=for-the-badge&logo=gmail)](mailto:gabrielflores@tutamail.com)
+[![Correo electrónico](https://img.shields.io/badge/Email-Contactame-red?style=for-the-badge&logo=gmail)](mailto:gabrielias28e@gmail.com)
 
 ## 👋 Acerca de mí
-Soy especialista en automatización de IA centrado en **operaciones de ingresos (RevOps)** y **experiencia del cliente**.
+Soy especialista en automatización de IA centrado en **Operaciones de Ingresos (RevOps)** y **Experiencia del Cliente**.
 No solo escribo scripts, sino que diseño sistemas integrales que integran LLM (OpenAI, Gemini, Anthropic) con infraestructura empresarial (CRM, calendarios, bases de datos) para resolver problemas costosos.
 
 * **Enfoque:** Reducir el tiempo de intervención humana en más de un 80 % manteniendo una alta precisión.
@@ -50,4 +50,4 @@ No solo escribo scripts, sino que diseño sistemas integrales que integran LLM (
 ---
 
 ### 📬 ¿Listo para automatizar tus flujos de trabajo?
-[**Conectemos en LinkedIn**] https://www.linkedin.com/in/gabriel-elias-flores-440413342/ o envíame un correo electrónico (gabrielflores@tutamail.com) para hablar sobre tu infraestructura.
+[**Conectemos en LinkedIn**] https://www.linkedin.com/in/gabriel-elias-flores-440413342/ o envíame un correo electrónico (gabrielias28e@gmail.com) para hablar sobre tu infraestructura.
