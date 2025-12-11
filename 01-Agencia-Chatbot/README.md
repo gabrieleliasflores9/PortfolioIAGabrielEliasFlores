@@ -63,11 +63,116 @@ Pila de alto nivel (no se incluyen aquí instrucciones paso a paso):
 
 ## 📸 Demostración/flujo de trabajo
 
-### 1. La lógica de automatización (creación)
+
+### 1. Arquitectura del sistema
+> El siguiente diagrama ilustra el flujo de datos desde el contacto inicial del usuario hasta el almacenamiento final del cliente potencial. Destaca cómo la capa de orquestación (n8n/Make) actúa como middleware entre la interfaz de chat frontend (ManyChat) y las capas de lógica/almacenamiento (OpenAI, Supabase).
+
+#### 1.1 Lógica de conversación (flujo de usuarios)
+<details>
+<summary>🔎 Haga clic para ver el árbol de decisiones de conversación detallado</summary>
+
+```mermaid
+graph LR
+    %% Capa de Frontend
+    subgraph Frontend["🌐 Canales de Usuario"]
+        U[Usuario] --> IG[Instagram DM]
+        U --> WA[WhatsApp]
+    end
+    
+    %% Puerta de Enlace API
+    subgraph APIGateway["📡 Puerta de Enlace API"]
+        MC[API ManyChat]
+        WP[API Whapi]
+    end
+    
+    %% Middleware / Orquestación
+    subgraph Middleware["🧠 Middleware / Backend"]
+        N8N[Motor de Flujos n8n]
+        WH[Manejador de Webhooks]
+        Router[Enrutador de Mensajes]
+    end
+    
+    %% Capa de Inteligencia AI
+    subgraph AILayer["🤖 Capa de Inteligencia IA"]
+        OAI[API OpenAI<br/>Clasificación de Intención]
+        GEM[API Gemini<br/>Extracción de Entidades]
+        PROC[Generador de Respuestas]
+    end
+    
+    %% Capa de Datos
+    subgraph DataLayer["💾 Capa de Datos"]
+        SB[(Supabase<br/>Almacenamiento Principal)]
+        AT[(Airtable<br/>Analítica & CRM)]
+    end
+    
+    %% Transferencia a Humano
+    subgraph Handoff["👤 Capa de Agente Humano"]
+        TG[Bot Telegram<br/>Notificación Agente]
+        AGENT[Panel de Agente Humano]
+    end
+    
+    %% Conexiones - Frontend a API
+    IG -->|Mensaje Entrante| MC
+    WA -->|Mensaje Entrante| WP
+    
+    %% API a Middleware
+    MC -->|POST Webhook| WH
+    WP -->|POST Webhook| WH
+    WH --> N8N
+    N8N --> Router
+    
+    %% Middleware a IA
+    Router -->|Texto Sin Procesar| OAI
+    Router -->|Texto Sin Procesar| GEM
+    OAI -->|Intención + Confianza| PROC
+    GEM -->|Entidades| PROC
+    PROC -->|Respuesta Estructurada| N8N
+    
+    %% Middleware a Datos
+    N8N -->|Guardar Datos Lead| SB
+    N8N -->|Guardar Interacción| SB
+    N8N -->|Sincronizar Analítica| AT
+    SB -.->|Leer Datos Históricos| N8N
+    
+    %% Flujo de Respuesta
+    N8N -->|Enviar Respuesta| MC
+    N8N -->|Enviar Respuesta| WP
+    MC -->|Entregar| IG
+    WP -->|Entregar| WA
+    
+    %% Lógica de Transferencia
+    N8N -->|Consulta Compleja Detectada| TG
+    N8N -->|Listo para Cotizar| TG
+    TG -->|Notificar| AGENT
+    AGENT -.->|Leer Contexto| SB
+    AGENT -.->|Actualizar Estado Lead| AT
+    
+    %% Estilos
+    classDef frontend fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef api fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef middleware fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef ai fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef data fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef human fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    
+    class U,IG,WA frontend
+    class MC,WP api
+    class N8N,WH,Router middleware
+    class OAI,GEM,PROC ai
+    class SB,AT data
+    class TG,AGENT human
+
+
+```
+
+Nota: En los archivos del repositorio se puede consultar una versión depurada del esquema del flujo de trabajo (Appointment Assistant.blueprint.json).
+
+
+### 2. La lógica de automatización (Make)
 
 <img width="960" height="423" alt="2025-12-06 (6)" src="https://github.com/user-attachments/assets/87c7cbf6-e655-4127-8d27-dfaa63f6fd96" />
 
-### 2. Los flujos de mensajería (Manychat)
+### 3. Los flujos de mensajería (Manychat)
 
 <img width="910" height="357" alt="2025-12-06 (7)" src="https://github.com/user-attachments/assets/58b792e9-420d-4caa-8bcb-29fcfc716a0f" />
 
