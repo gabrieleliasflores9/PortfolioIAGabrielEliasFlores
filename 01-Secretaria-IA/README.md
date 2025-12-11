@@ -60,15 +60,133 @@ WhatsApp (paciente) → WhatsApp BSP (Evolution / ManyChat) → Capa NLP/HTTPS/W
 
 ## 📸 Demostración/flujo de trabajo
 
-### 1. La lógica de automatización (n8n)
+
+### 1. Arquitectura del sistema
+> El siguiente diagrama ilustra el flujo de datos desde el contacto inicial del usuario hasta el almacenamiento final del cliente potencial. Destaca cómo la capa de orquestación (n8n) actúa como middleware entre la interfaz de chat frontend (Evolution API) y las capas de lógica/almacenamiento (OpenAI, Gemini, Supabase, Redis, Postgres).
+
+#### 1.1 Lógica de conversación (flujo de usuarios)
+<details>
+<summary>🔎 Haga clic para ver el árbol de decisiones de conversación detallado</summary>
+
+```mermaid
+
+graph LR
+    %% Capa de Frontend
+    subgraph Frontend["🌐 Canales de Usuario"]
+        U[Usuario] --> IG[Instagram DM]
+        U --> WA[WhatsApp]
+    end
+    
+    %% Puerta de Enlace API
+    subgraph APIGateway["📡 Puerta de Enlace API"]
+        MC[API ManyChat]
+        WP[API Whapi]
+    end
+    
+    %% Middleware / Orquestación
+    subgraph Middleware["🧠 Middleware / Backend"]
+        N8N[Motor de Flujos n8n]
+        WH[Manejador de Webhooks]
+        Router[Enrutador de Mensajes]
+    end
+    
+    %% Capa de Inteligencia AI
+    subgraph AILayer["🤖 Capa de Inteligencia IA"]
+        OAI[API OpenAI<br/>Clasificación de Intención]
+        GEM[API Gemini<br/>Extracción de Entidades]
+        PROC[Generador de Respuestas]
+    end
+    
+    %% Capa de Memoria y Caché
+    subgraph MemoryLayer["⚡ Memoria y Caché"]
+        REDIS[(Redis<br/>Caché Temporal Mensajes)]
+        PSQL[(PostgreSQL<br/>Memoria de Conversación)]
+    end
+    
+    %% Capa de Datos
+    subgraph DataLayer["💾 Persistencia de Datos"]
+        SB[(Supabase<br/>Almacenamiento Principal)]
+        AT[(Airtable<br/>Analítica & CRM)]
+    end
+    
+    %% Transferencia a Humano
+    subgraph Handoff["👤 Capa de Agente Humano"]
+        TG[Bot Telegram<br/>Notificación Agente]
+        AGENT[Panel de Agente Humano]
+    end
+    
+    %% Conexiones - Frontend a API
+    IG -->|Mensaje Entrante| MC
+    WA -->|Mensaje Entrante| WP
+    
+    %% API a Middleware
+    MC -->|POST Webhook| WH
+    WP -->|POST Webhook| WH
+    WH --> N8N
+    N8N --> Router
+    
+    %% Middleware a Memoria (Guardar Cada Mensaje)
+    Router -->|Cachear Mensaje| REDIS
+    Router -->|Almacenar Conversación| PSQL
+    
+    %% Middleware a IA
+    Router -->|Texto + Contexto| OAI
+    Router -->|Texto + Contexto| GEM
+    PSQL -.->|Cargar Historial| Router
+    REDIS -.->|Obtener Mensajes Recientes| Router
+    
+    OAI -->|Intención + Confianza| PROC
+    GEM -->|Entidades Extraídas| PROC
+    PROC -->|Respuesta Estructurada| N8N
+    
+    %% Middleware a Datos Persistentes
+    N8N -->|Guardar Info Lead| SB
+    N8N -->|Guardar Log Interacción| SB
+    N8N -->|Sincronizar Analítica| AT
+    SB -.->|Consultar Datos Históricos| N8N
+    
+    %% Flujo de Respuesta vía Webhooks
+    N8N -->|Enviar Respuesta vía Webhook| MC
+    N8N -->|Enviar Respuesta vía Webhook| WP
+    MC -->|Entregar al Usuario| IG
+    WP -->|Entregar al Usuario| WA
+    
+    %% Lógica de Transferencia
+    N8N -->|Consulta Compleja Detectada| TG
+    N8N -->|Listo para Cotizar| TG
+    TG -->|Notificar Agente| AGENT
+    AGENT -.->|Leer Contexto Completo| SB
+    AGENT -.->|Leer Conversación| PSQL
+    AGENT -.->|Actualizar Estado Lead| AT
+    
+    %% Estilos
+    classDef frontend fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef api fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef middleware fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef ai fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef memory fill:#e0f2f1,stroke:#00796b,stroke-width:2px
+    classDef data fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef human fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    
+    class U,IG,WA frontend
+    class MC,WP api
+    class N8N,WH,Router middleware
+    class OAI,GEM,PROC ai
+    class REDIS,PSQL memory
+    class SB,AT data
+    class TG,AGENT human
+
+```
+
+### 2. La lógica de automatización (n8n)
 ![workflown8n1](https://github.com/user-attachments/assets/b73ab5a0-821b-4319-b685-9da2a04a5378)
 
 Nota: En los archivos del repositorio se puede consultar una versión depurada del esquema del flujo de trabajo (Appointment Assistant.blueprint.json).
 
-### 2. Experiencia del paciente (WhatsApp)
+### 3. Experiencia del paciente (WhatsApp)
 ![capturawhatsapp](https://github.com/user-attachments/assets/69ea9e49-6754-417a-aa5b-9425e2145aba)
 
-### 3. Vista del administrador (transferencia de Chatwoot)
+### 4. Vista del administrador (transferencia de Chatwoot)
 ![statisticscrm2025](https://github.com/user-attachments/assets/c07ad0a0-0557-415a-8485-eaf9dfad294b)
 
 ---
