@@ -63,6 +63,8 @@ WhatsApp (paciente) → WhatsApp BSP (Evolution / ManyChat) → Capa NLP/HTTPS/W
 ### 1. La lógica de automatización (n8n)
 ![workflown8n1](https://github.com/user-attachments/assets/b73ab5a0-821b-4319-b685-9da2a04a5378)
 
+Nota: En los archivos del repositorio se puede consultar una versión depurada del esquema del flujo de trabajo (Appointment Assistant.blueprint.json).
+
 ### 2. Experiencia del paciente (WhatsApp)
 ![capturawhatsapp](https://github.com/user-attachments/assets/69ea9e49-6754-417a-aa5b-9425e2145aba)
 
