@@ -165,8 +165,6 @@ graph LR
 
 ```
 
-Nota: En los archivos del repositorio se puede consultar una versión depurada del esquema del flujo de trabajo (Appointment Assistant.blueprint.json).
-
 
 ### 2. La lógica de automatización (Make)
 
