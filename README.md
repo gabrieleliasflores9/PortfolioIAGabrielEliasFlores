@@ -10,7 +10,7 @@ Soy especialista en automatización de IA centrado en **Operaciones de Ingresos 
 No solo escribo scripts, sino que diseño sistemas integrales que integran LLM (OpenAI, Gemini, Anthropic) con infraestructura empresarial (CRM, calendarios, bases de datos) para resolver problemas costosos.
 
 * **Enfoque:** Reducir el tiempo de intervención humana en más de un 80 % manteniendo una alta precisión.
-* **Ubicación:** Venezuela (abierto a trabajo remoto/por contrato).
+* **Ubicación:** Venezuela (abierto a trabajo remoto/por contrato)
 
 ---
 
