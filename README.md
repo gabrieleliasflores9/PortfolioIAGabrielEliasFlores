@@ -6,8 +6,7 @@
 [![Correo electrónico](https://img.shields.io/badge/Email-Contactame-red?style=for-the-badge&logo=gmail)](mailto:gabrielias28e@gmail.com)
 
 ## 👋 Acerca de mí
-Soy especialista en automatización de IA centrado en **Operaciones de Ingresos (RevOps)** y **Experiencia del Cliente**.
-No solo escribo scripts, sino que diseño sistemas integrales que integran LLM (OpenAI, Gemini, Anthropic) con infraestructura empresarial (CRM, calendarios, bases de datos) para resolver problemas costosos.
+Estudiante de Administración de Empresas en la Universidad de Los Andes y fundador de Obikus, una plataforma SaaS de documentación clínica con IA en producción. Además de construir mi propio producto, soy especialista en automatización de IA centrado en Operaciones de Ingresos (RevOps) y Experiencia del Cliente. Diseño sistemas integrales que integran LLMs (Claude, OpenAI, Gemini) con infraestructura empresarial (CRM, calendarios, bases de datos) para resolver problemas costosos y productos completos de punta a punta, desde la base de datos hasta el frontend.
 
 * **Enfoque:** Reducir el tiempo de intervención humana en más de un 80 % manteniendo una alta precisión.
 * **Ubicación:** Venezuela (abierto a trabajo remoto/por contrato)
@@ -27,6 +26,11 @@ No solo escribo scripts, sino que diseño sistemas integrales que integran LLM (
 
 ## 🛠️ Arsenal técnico
 
+### Producto y desarrollo web
+* **Frontend**: React, TypeScript, Vite, Next.js, Tailwind CSS, shadcn/ui
+* **Backend/DB**: AWS, Google Cloud Services, SQL y Supabase
+* **Despliegue**: Vercel, Cloudflare, VPS, gestión de dominios/nameservers
+
 ### **Orquestación y lógica**
 * **n8n:** Flujos de trabajo avanzados autohospedados, gestión de webhooks y transformación de datos JSON.
 * **Make.com:** Lógica de enrutador, iteradores de matrices y gestión de errores de múltiples rutas.
@@ -38,6 +42,7 @@ No solo escribo scripts, sino que diseño sistemas integrales que integran LLM (
 ### **Integraciones y herramientas**
 * **Bases de datos:** Airtable, Google Sheets, Supabase, PostgreSQL.
 * **Comunicación:** API de WhatsApp, Instagram, Messenger, Evolution/ManyChat, API de Gmail, Slack, Telegram.
+* **Analítica**: Google Analytics 4, Google Search Console.
 * **Scraping:** Apify, Apollo.
 
 ---
